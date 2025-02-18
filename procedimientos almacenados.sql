@@ -251,7 +251,15 @@ delimiter ;
 -- Procedimiento agenda para los cuidadores
 
 delimiter $$
+drop procedure agendaCuidador;
+
 create procedure agendaCuidador
 	(in fechInicio date, in fechFin date)
 begin
-	select reservas.fechaIni, reservas.fechaFin, reservas.codTipoCuidado 
+	select reservas.fechaIni, reservas.fechaFin, reservas.codTipoCuidado, 
+		   reservas.codCliente, reservas.codMascota
+    from reservas
+    where (reservas.fechaIni between fechInicio and fechFin) and
+		  (reservas.fechaFin between fechInicio and fechFin);
+end $$
+delimiter ;

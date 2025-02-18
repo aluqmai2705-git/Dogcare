@@ -115,16 +115,24 @@ constraint `fk_calendarioDisponibilidad_tiposCuidados`
 foreign key (`codTipoCuidado`) references `tiposCuidados`(`codTipoCuidado`)
 on delete cascade
 );
- 
+alter table reservas 
+add constraint `fk_reservas_mascotas` 
+foreign key (`codMascota`) references `mascotas`(`codMascota`)
+on delete no action;
 create table if not exists `reservas`(
 
 `codCliente` int,
 `codCuidador` int,
 `codTipoCuidado` int ,
 `codDiaSemana` int ,
-`fechaIni` varchar(30),
-`fechaFin` varchar(30),
+`fechaIni` date,
+`fechaFin` date,
+`codMascota` int,
 constraint `pk_reservas` primary key(`codCliente`,`codCuidador`,`codTipoCuidado`, `codDiaSemana`),
+
+constraint `fk_reservas_mascotas` 
+foreign key (`codMascota`) references `mascotas`(`codMascota`)
+on delete no action,
 
 constraint `fk_reservas_clientes` 
 foreign key (`codCliente`) references `clientes`(`codCliente`)
